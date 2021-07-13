@@ -50,7 +50,8 @@ class DetailViewController: UIViewController {
             return
         }
         
-        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        //challenge 1: Try adding the image name to the list of items that are shared. 
+        let vc = UIActivityViewController(activityItems: [image, selectedImage!], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true)
     }
