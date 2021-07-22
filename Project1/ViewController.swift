@@ -21,6 +21,10 @@ class ViewController: UITableViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        //Challenge 1 day 40: Modify project 1 so that loading the list of NSSL images from our bundle happens in the background.
+        
+        performSelector(inBackground: #selector(getImages), with: nil)
+        
         let fm = FileManager.default
         let path = Bundle.main.resourcePath!
         let items = try! fm.contentsOfDirectory(atPath: path)
@@ -32,6 +36,25 @@ class ViewController: UITableViewController {
         }
         
         picturesSorted = pictures.sorted()  //Challenge 2: Show the list of images sorted by alphabetical order
+        
+    }
+    
+    //MARK: - Methods
+    
+    @objc func getImages() {
+        
+        let fm = FileManager.default
+        let path = Bundle.main.resourcePath!
+        let items = try! fm.contentsOfDirectory(atPath: path)
+        
+        for item in items {
+            if item.hasPrefix("nssl") {
+                pictures.append(item)
+            }
+        }
+        
+        picturesSorted = pictures.sorted()  //Challenge 2: Show the list of images sorted by alphabetical order
+        performSelector(inBackground: #selector(UITableView.reloadData), with: nil)
         
     }
     
